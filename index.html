@@ -123,6 +123,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--cyan);
+    margin: 0;
   }
   .dim::before, .dim::after {
     content: "";
@@ -138,7 +139,7 @@
   }
 
   /* ---- Schematic motif (data-pipeline diagram) ---- */
-  .schematic { margin: 0; }
+  .schematic { margin: 0.3rem 0 0.1rem; }
   .schematic svg { width: 100%; height: auto; display: block; overflow: visible; }
   .schematic .edge { stroke: var(--line); stroke-width: 1.5; }
   .schematic .flow { stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: 5 9; fill: none; }
@@ -163,7 +164,6 @@
     gap: 1.05rem;
     transition: border-color 0.18s ease;
   }
-  /* registration crosshairs at opposite corners */
   .card::before, .card::after {
     content: "";
     position: absolute;
@@ -202,10 +202,11 @@
   }
   .site-link {
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    font-weight: 500;
     color: var(--accent);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1.5px solid transparent;
     white-space: nowrap;
     transition: border-color 0.15s ease;
   }
@@ -265,7 +266,7 @@
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.5rem 1rem;
-    font-size: 1rem;
+    font-size: 1.05rem;
     padding: 0.7rem 0;
     border-bottom: 1px solid var(--line);
   }
@@ -294,13 +295,22 @@
     color: var(--faint);
   }
 
+  /* ---- Scroll reveal (parallax handled in JS) ---- */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.65s cubic-bezier(.2,.7,.2,1), transform 0.65s cubic-bezier(.2,.7,.2,1);
+  }
+  .js .reveal.in { opacity: 1; transform: none; }
+
   a:focus-visible, .site-link:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
   }
   @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+    * { transition: none !important; animation: none !important; }
+    .js .reveal { opacity: 1 !important; transform: none !important; }
   }
 </style>
 </head>
@@ -318,39 +328,11 @@
     <p class="lede">I build <strong>data-driven tools</strong> for research and the public interest — from the pipeline that cleans and classifies millions of records to the interface people actually use.</p>
   </header>
 
-  <section class="schematic" aria-hidden="true">
-    <svg viewBox="0 0 600 104" role="img">
-      <text class="scap" x="0" y="12">DATA PIPELINE — RAW RECORDS → DASHBOARD</text>
-      <line class="edge" x1="67" y1="52" x2="533" y2="52"/>
-      <line class="flow" x1="67" y1="52" x2="533" y2="52"/>
-      <g>
-        <circle class="node" cx="60" cy="52" r="7"/><circle class="core" cx="60" cy="52" r="2.5"/>
-        <text class="nlabel" x="60" y="84" text-anchor="middle">INGEST</text>
-      </g>
-      <g>
-        <circle class="node" cx="180" cy="52" r="7"/><circle class="core" cx="180" cy="52" r="2.5"/>
-        <text class="nlabel" x="180" y="84" text-anchor="middle">CLASSIFY</text>
-      </g>
-      <g>
-        <circle class="node" cx="300" cy="52" r="7"/><circle class="core" cx="300" cy="52" r="2.5"/>
-        <text class="nlabel" x="300" y="84" text-anchor="middle">RESOLVE</text>
-      </g>
-      <g>
-        <circle class="node" cx="420" cy="52" r="7"/><circle class="core" cx="420" cy="52" r="2.5"/>
-        <text class="nlabel" x="420" y="84" text-anchor="middle">ANALYZE</text>
-      </g>
-      <g>
-        <circle class="node" cx="540" cy="52" r="7"/><circle class="core" cx="540" cy="52" r="2.5"/>
-        <text class="nlabel" x="540" y="84" text-anchor="middle">SERVE</text>
-      </g>
-    </svg>
-  </section>
-
   <section>
     <p class="dim"><span class="cap"></span>Projects — 02 sheets<span class="cap"></span></p>
     <div class="projects">
 
-      <article class="card">
+      <article class="card reveal">
         <div class="card-top">
           <div class="title-group">
             <span class="idx">01</span>
@@ -360,6 +342,18 @@
         </div>
         <p class="role">SciLaw<span class="sep">/</span>Full-stack build · data pipeline · analytics</p>
         <p class="desc">An interactive analytics platform for criminal-justice research, turning tens of millions of raw court records from seven U.S. jurisdictions into a queryable dashboard on recidivism, dispositions, and offense patterns.</p>
+        <div class="schematic" aria-hidden="true">
+          <svg viewBox="0 0 600 104" role="img">
+            <text class="scap" x="0" y="12">DATA PIPELINE — RAW RECORDS → DASHBOARD</text>
+            <line class="edge" x1="67" y1="52" x2="533" y2="52"/>
+            <line class="flow" x1="67" y1="52" x2="533" y2="52"/>
+            <g><circle class="node" cx="60" cy="52" r="7"/><circle class="core" cx="60" cy="52" r="2.5"/><text class="nlabel" x="60" y="84" text-anchor="middle">INGEST</text></g>
+            <g><circle class="node" cx="180" cy="52" r="7"/><circle class="core" cx="180" cy="52" r="2.5"/><text class="nlabel" x="180" y="84" text-anchor="middle">CLASSIFY</text></g>
+            <g><circle class="node" cx="300" cy="52" r="7"/><circle class="core" cx="300" cy="52" r="2.5"/><text class="nlabel" x="300" y="84" text-anchor="middle">RESOLVE</text></g>
+            <g><circle class="node" cx="420" cy="52" r="7"/><circle class="core" cx="420" cy="52" r="2.5"/><text class="nlabel" x="420" y="84" text-anchor="middle">ANALYZE</text></g>
+            <g><circle class="node" cx="540" cy="52" r="7"/><circle class="core" cx="540" cy="52" r="2.5"/><text class="nlabel" x="540" y="84" text-anchor="middle">SERVE</text></g>
+          </svg>
+        </div>
         <ul>
           <li><strong>Data pipeline</strong> that ingests, de-duplicates, and resolves individuals across jurisdictions, then classifies offenses using statute maps with an LLM fallback (Amazon Bedrock) for residual cases.</li>
           <li><strong>Serverless architecture</strong> on AWS — Athena over partitioned data, Lambda query services, Cognito authentication with server-side tiered access, and CloudFront/WAF.</li>
@@ -378,7 +372,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card reveal">
         <div class="card-top">
           <div class="title-group">
             <span class="idx">02</span>
@@ -404,7 +398,7 @@
     </div>
   </section>
 
-  <section class="contact">
+  <section class="contact reveal">
     <p class="dim"><span class="cap"></span>Get in touch<span class="cap"></span></p>
     <p>Open to conversations about data engineering, civic-tech, and research tooling roles.</p>
     <div class="contact-rows">
@@ -429,5 +423,44 @@
   </footer>
 
 </div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.classList.add('js');
+
+    // Rise-in reveal as each sheet enters view
+    var reveals = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(reveals, function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+      Array.prototype.forEach.call(reveals, function (el) { io.observe(el); });
+    }
+
+    // Depth parallax: the graph-paper grid drifts slower than the page (two layers, two speeds)
+    if (!reduce) {
+      var body = document.body;
+      var ticking = false;
+      function update() {
+        var y = window.scrollY || window.pageYOffset || 0;
+        var maj = (-1 + y * 0.5);
+        var min = (-1 + y * 0.32);
+        body.style.backgroundPosition =
+          '-1px ' + maj + 'px, -1px ' + maj + 'px, -1px ' + min + 'px, -1px ' + min + 'px';
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+      }, { passive: true });
+      update();
+    }
+  })();
+</script>
 </body>
 </html>
