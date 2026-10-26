@@ -212,6 +212,13 @@
   }
   .site-link:hover { border-bottom-color: var(--accent); }
   .site-link::after { content: " ↗"; }
+  .site-tag {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 2.3vw, 0.92rem);
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    white-space: nowrap;
+  }
   .role {
     font-family: var(--mono);
     font-size: 0.74rem;
@@ -329,7 +336,7 @@
   </header>
 
   <section>
-    <p class="dim"><span class="cap"></span>Projects — 02 sheets<span class="cap"></span></p>
+    <p class="dim"><span class="cap"></span>Projects — 03 sheets<span class="cap"></span></p>
     <div class="projects">
 
       <article class="card reveal">
@@ -392,6 +399,45 @@
           <span class="tag">HTML</span>
           <span class="tag">CSS</span>
           <span class="tag">JavaScript</span>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-top">
+          <div class="title-group">
+            <span class="idx">03</span>
+            <h3>Poker Night</h3>
+          </div>
+          <span class="site-tag">Case study · no live link</span>
+        </div>
+        <p class="role">College event<span class="sep">/</span>Pipeline design · direction · editing</p>
+        <p class="desc">A data-driven broadcast-overlay pipeline for live-event video. I produced two edited poker videos (~30 min total) for a college screening, with TV-style graphics generated automatically from a structured hand log. An AI-assisted build I directed — I designed the data model and display rules, supplied and verified the ground-truth data (chip counts, cards, actions), caught errors, and made every editorial call.</p>
+        <div class="schematic" aria-hidden="true">
+          <svg viewBox="0 0 600 104" role="img">
+            <text class="scap" x="0" y="12">PRODUCTION PIPELINE — FOOTAGE → EXPORT</text>
+            <line class="edge" x1="67" y1="52" x2="533" y2="52"/>
+            <line class="flow" x1="67" y1="52" x2="533" y2="52"/>
+            <g><circle class="node" cx="60" cy="52" r="7"/><circle class="core" cx="60" cy="52" r="2.5"/><text class="nlabel" x="60" y="84" text-anchor="middle">FOOTAGE</text></g>
+            <g><circle class="node" cx="180" cy="52" r="7"/><circle class="core" cx="180" cy="52" r="2.5"/><text class="nlabel" x="180" y="84" text-anchor="middle">TRANSCRIBE</text></g>
+            <g><circle class="node" cx="300" cy="52" r="7"/><circle class="core" cx="300" cy="52" r="2.5"/><text class="nlabel" x="300" y="84" text-anchor="middle">LOG</text></g>
+            <g><circle class="node" cx="420" cy="52" r="7"/><circle class="core" cx="420" cy="52" r="2.5"/><text class="nlabel" x="420" y="84" text-anchor="middle">RENDER</text></g>
+            <g><circle class="node" cx="540" cy="52" r="7"/><circle class="core" cx="540" cy="52" r="2.5"/><text class="nlabel" x="540" y="84" text-anchor="middle">EXPORT</text></g>
+          </svg>
+        </div>
+        <ul>
+          <li><strong>Overlay engine</strong> in Python and Pillow, built as a state machine that computes display state in source time and samples it once per output frame (29.97 fps) — frame-accurate cards, per-street bets, pot and running profit, with opponent cards never revealed early. Frame reuse keeps a 15-minute video to ~400 unique overlay images.</li>
+          <li><strong>Speech-to-text indexing</strong> with Whisper (turbo, int8 via sherpa-onnx) and Silero VAD to locate key moments — "I fold", "All in" — across ~4 hours of audio, plus RMS energy profiling to time each caption to the spoken word.</li>
+          <li><strong>Compositing and edit</strong> in FFmpeg: overlay filtering, concatenation without re-encoding, freeze-frame inserts, and 40 ms audio fades over cuts; segment-based rendering to stay under a 3-minute-per-job compute limit.</li>
+          <li><strong>Edit decision list</strong> mapping source ranges per hand that keeps graphics synced across cuts and auto-generates a timestamped rundown for the live hosts — 39 minutes of footage cut to a 30-minute screening.</li>
+          <li><strong>Single source of truth</strong> — a shared hand-log web app (cards, bets, streets, stack checks) whose validation flags chip stacks that don't reconcile.</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">Pillow</span>
+          <span class="tag">FFmpeg</span>
+          <span class="tag">Whisper</span>
+          <span class="tag">Silero VAD</span>
+          <span class="tag">sherpa-onnx</span>
         </div>
       </article>
 
