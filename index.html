@@ -264,6 +264,31 @@
     padding: 0.26rem 0.6rem;
   }
 
+  /* ---- Screenshot figure ---- */
+  .shot {
+    margin: 0.2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 0.18s ease;
+  }
+  .shot:hover { border-color: var(--accent); }
+  .shot a.frame { display: block; line-height: 0; }
+  .shot img { width: 100%; height: auto; display: block; }
+  .shot figcaption {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    color: var(--faint);
+    padding: 0.55rem 0.7rem;
+    border-top: 1px solid var(--line);
+  }
+  .shot figcaption a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+  .shot figcaption a:hover { border-bottom-color: var(--accent); }
+
   /* ---- Contact ---- */
   .contact { display: flex; flex-direction: column; gap: 1rem; }
   .contact p { margin: 0; color: var(--muted); max-width: 36rem; }
@@ -408,7 +433,7 @@
             <span class="idx">03</span>
             <h3>Poker Night</h3>
           </div>
-          <a class="site-link" href="https://claude.ai/artifact/QLaj3nEhXft6TABGVUe6je?sk=6YnN3BprMerlEEy4g_xsNw" target="_blank" rel="noopener">View hand log</a>
+          <span class="site-tag">Case study</span>
         </div>
         <p class="role">College event<span class="sep">/</span>Pipeline design · direction · editing</p>
         <p class="desc">A data-driven broadcast-overlay pipeline for live-event video. I produced two edited poker videos (~30 min total) for a screening, with TV-style graphics generated automatically from a structured hand log.</p>
@@ -430,6 +455,10 @@
           <li><strong>Compositing and edit</strong> in FFmpeg: overlay filtering, concatenation without re-encoding, freeze-frame inserts, and 40 ms audio fades over cuts; segment-based rendering to stay under a 3-minute-per-job compute limit.</li>
           <li><strong>Single source of truth</strong> — a shared hand-log web app (cards, bets, streets, stack checks) whose validation flags chip stacks that don't reconcile.</li>
         </ul>
+        <figure class="shot">
+          <a class="frame" href="https://claude.ai/artifact/QLaj3nEhXft6TABGVUe6je?sk=6YnN3BprMerlEEy4g_xsNw" target="_blank" rel="noopener"><img src="hand-log.webp" alt="The Poker Night hand log: an editable ledger of each hand's hole cards, board, bet timings, result, pot won, and calculated-vs-counted stack checks." loading="lazy"></a>
+          <figcaption>The hand log — the single source of truth the overlay renders from. <a href="https://claude.ai/artifact/QLaj3nEhXft6TABGVUe6je?sk=6YnN3BprMerlEEy4g_xsNw" target="_blank" rel="noopener">Open the live, editable log ↗</a></figcaption>
+        </figure>
         <div class="tags">
           <span class="tag">Python</span>
           <span class="tag">Pillow</span>
